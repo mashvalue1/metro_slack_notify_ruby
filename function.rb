@@ -22,7 +22,7 @@ end
 def get_line_info(line_name = nil)
   q = {
       "rdf:type": "odpt:TrainInformation",
-      "acl:consumerKey": "ENV['TOKYO_METRO_ACCESS_KEY']"
+      "acl:consumerKey": ENV['TOKYO_METRO_ACCESS_KEY']
   }
 
   if LINE_PARAMS.keys.include? line_name
