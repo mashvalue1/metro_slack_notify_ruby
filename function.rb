@@ -9,9 +9,14 @@ LINE_NAMES = YAML.load_file(File.join(__dir__, "./line_names.yml"))
 def lambda_handler(event:, context:)
   line_name = ENV["TARGET_LINE"]
   line_info = get_line_info(line_name)
+
+  is_trouble = line_info.find { |line| line["odpt:trainInformationText"] != "現在、平常どおり運転しています。" }
+
   data = line_info.map do |line|
     "#{LINE_NAMES[line['odpt:railway']]} : #{line['odpt:trainInformationText']}"
   end.join("\n")
+
+  data << "\n @here" if is_trouble
 
   uri = URI.parse(ENV["SLACK_URL"])
   http = Net::HTTP.new(uri.host, uri.port)
