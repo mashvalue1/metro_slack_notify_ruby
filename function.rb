@@ -16,7 +16,7 @@ def lambda_handler(event:, context:)
     "#{LINE_NAMES[line['odpt:railway']]} : #{line['odpt:trainInformationText']}"
   end.join("\n")
 
-  data << "\n @here" if is_trouble
+  data << "\n <!here>" if is_trouble
 
   uri = URI.parse(ENV["SLACK_URL"])
   http = Net::HTTP.new(uri.host, uri.port)
